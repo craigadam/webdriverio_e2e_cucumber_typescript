@@ -1,5 +1,7 @@
 import { Given, When, Then } from "@wdio/cucumber-framework";
-import chai from "chai";
+// import chai from "chai"; // Typescript? ?ES6?
+var chai = require("chai");
+var path = require("path");
 
 // Given("Google page is opened")
 // use a regular expression
@@ -141,42 +143,120 @@ When(/^Perform web interactions$/, async function () {
   /**
    * windows
    */
-  const originalWindowTitle = await browser.getTitle();
-  await browser.url("/windows");
-  await $(`=Click Here`).click(); // the application (web browser) creates the new window not webdriverIO
-  await $(`=Elemental Selenium`).click();
+  // await browser.url("/windows");
+  // const originalWindowTitle = await browser.getTitle();
+  // await $(`=Click Here`).click(); // the application (web browser) creates the new window not webdriverIO
+  // await $(`=Elemental Selenium`).click();
 
-  // control remains in the original window
-  var currentWindowTitle = await browser.getTitle();
-  console.log(`>>>>> currentWindowTitle: ${currentWindowTitle}`);
+  // // control remains in the original window
+  // var currentWindowTitle = await browser.getTitle();
+  // console.log(`>>>>> currentWindowTitle: ${currentWindowTitle}`);
 
-  const requiredTitle = `Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro`;
+  // const requiredTitle = `Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro`;
 
-  let windowHandles: string[] = await browser.getWindowHandles();
-  let originalWindowHandle: string = await browser.getWindowHandle();
+  // let windowHandles: string[] = await browser.getWindowHandles();
+  // let originalWindowHandle: string = await browser.getWindowHandle();
 
-  // switch through windows until required title is matched
-  for (let index = 0; index < windowHandles.length; index++) {
-    const currentWindowHandle: string = windowHandles[index];
-    await browser.switchToWindow(currentWindowHandle);
-    const currentWindowTitle: string = await browser.getTitle();
-    if (currentWindowTitle === requiredTitle) {
-      break;
-    }
-  }
+  // // switch through windows until required title is matched
+  // for (let index = 0; index < windowHandles.length; index++) {
+  //   const currentWindowHandle: string = windowHandles[index];
+  //   await browser.switchToWindow(currentWindowHandle);
+  //   const currentWindowTitle: string = await browser.getTitle();
+  //   if (currentWindowTitle === requiredTitle) {
+  //     break;
+  //   }
+  // }
 
-  // confirm header is as expected
-  let headerText: string = await $(`h1`).getText();
-  console.log(`>>>>> header = ${headerText}`);
+  // // confirm header is as expected
+  // let headerText: string = await $(`h1`).getText();
+  // console.log(`>>>>> header = ${headerText}`);
 
-  // switch back to parent
-  // await browser.switchToWindow(originalWindowHandle);
+  // // switch back to parent
+  // // await browser.switchToWindow(originalWindowHandle);
+  // // var currentWindowTitle: string = await browser.getTitle();
+  // // console.log(`>>>>> currentWindowTitle: ${currentWindowTitle}`);
+  // // chai.expect(currentWindowTitle).to.equal(originalWindowTitle);
+  // // OR
+  // await browser.switchWindow(`The Internet`);
   // var currentWindowTitle: string = await browser.getTitle();
   // console.log(`>>>>> currentWindowTitle: ${currentWindowTitle}`);
   // chai.expect(currentWindowTitle).to.equal(originalWindowTitle);
-  // OR
-  await browser.switchWindow(`(.*) Internet`);
-  var currentWindowTitle: string = await browser.getTitle();
-  console.log(`>>>>> currentWindowTitle: ${currentWindowTitle}`);
-  chai.expect(currentWindowTitle).to.equal(originalWindowTitle);
+
+  // await browser.url("/javascript_alerts");
+  // await $(`button=Click for JS Alert`).click();
+  // if (await browser.isAlertOpen()) {
+  //   await browser.pause(2000);
+  //   await browser.acceptAlert();
+  // }
+
+  // await $(`button=Click for JS Confirm`).click();
+  // if (await browser.isAlertOpen()) {
+  //   const alertText = await browser.getAlertText();
+  //   console.log(`>>>>> Alert text = ${alertText}`);
+  //   await browser.pause(2000);
+  //   await browser.dismissAlert();
+  // }
+
+  // await $(`button=Click for JS Prompt`).click();
+  // if (await browser.isAlertOpen()) {
+  //   const alertText = await browser.getAlertText();
+  //   console.log(`>>>>> Alert text = ${alertText}`);
+
+  //   await browser.sendAlertText(`some text`);
+  //   await browser.pause(2000);
+  //   await browser.acceptAlert();
+  // }
+
+  /**
+   * basic auth
+   * to bypass the popup send the basic auth through the url
+   */
+  // await browser.url(
+  //   "https://admin:admin@the-internet.herokuapp.com/basic_auth"
+  // );
+
+  /**
+   * File uploads
+   */
+  // await browser.url("/upload");
+  // let chooseFile = $(`#file-upload`);
+
+  // const currentWorkingDir = process.cwd();
+  // const relPath = `data/fileupload/dummy.txt`;
+  // const absPath = path.join(currentWorkingDir, relPath);
+
+  // // this is only for input tag types so can add the value (do not want to clear field)
+  // await chooseFile.addValue(absPath);
+  // await $(`#file-submit`).click();
+  //
+
+  /**
+   * Frames
+   */
+  // await browser.url("/frames");
+  // await $(`[href='/iframe']`).click();
+
+  // // need to switch to frame
+  // let frame = await $(`#mce_0_ifr`);
+  // await browser.switchToFrame(frame);
+  // // interact with the frame
+  // await $(`body p`).setValue("writing some content into the iframe ... ");
+  // await browser.pause(2000);
+  // /**
+  //  * Use key strokes
+  //  */
+  // // instead of clear with setValue
+  // await $(`body p`).click();
+  // // await browser.keys(["Meta", "A"]); // can send an array of keys "Meta" is the left control for some systems
+  // await browser.keys(["Control", "A"]);
+  // await browser.pause(1000);
+  // await browser.keys("Delete");
+  // await $(`body p`).addValue("writing different content ... ");
+  // await browser.pause(2000);
+
+  /**
+   * Basic scrolling
+   */
+
+  // await browser.debug();
 });

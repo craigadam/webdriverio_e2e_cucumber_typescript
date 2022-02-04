@@ -10,16 +10,17 @@
 # > npm run wdio
 
 
-Feature: Web Interactions
+Feature: Inventory
 
     Feature Description
 
-    # @demo
-    Scenario Outline: Demo Web Interactions
-        Given A web page is opened
-        When Perform web interactions
+    @demo
+    Scenario Outline: Demo Inventory
+        Given Login to inventory web app
+        Then Inventory page should list <ExpectedNumberOfProducts>
+        Then Validate all products have a valid price
 
 
         Examples:
-            | TestID    |
-            | Web_TC002 |
+            | TestID    | ExpectedNumberOfProducts |
+            | INV_TC001 | 6                        |
