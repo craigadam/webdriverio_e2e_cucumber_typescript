@@ -3,50 +3,13 @@ import { Given, When, Then } from "@wdio/cucumber-framework";
 var chai = require("chai");
 var path = require("path");
 
-// Given("Google page is opened")
-// use a regular expression
-Given(/^Google page is opened$/, async function () {
-  console.log("before open browser");
-  await browser.url("https://www.google.com");
-  await browser.pause(2000);
-  console.log("after open browser");
-
-  // browser.debug()
-});
-
-When(/^Search with (.*)$/, async function (searchItem) {
-  console.log("start search with .... ");
-  console.log(`>> searchItem: ${searchItem}`); // this is single tilda `
-  let ele = await $(`[name=q]`);
-  await ele.setValue(searchItem);
-  await browser.keys("Enter"); // https://w3c.github.io/webdriver/webdriver-spec.html#keyboard-actions (use normalised key value)
-  await browser.pause(2000);
-
-  console.log("end search with .... ");
-});
-
-Then(/^Click on the first match$/, async function () {
-  console.log("start click 1st matchh .... ");
-  let ele = await $(`<h3>`);
-  ele.click();
-  console.log("end click 1st matchh .... ");
-});
-
-Then(/^URL should match (.*)$/, async function (expectedURL) {
-  console.log("start url should match .... ");
-  console.log(`expected url: ${expectedURL}`);
-  let actualURL = await browser.getUrl();
-  chai.expect(actualURL).to.equal(expectedURL);
-  console.log("end url should match .... ");
-  await browser.pause(7000);
-});
-
+var baseURL = "https://the-internet.herokuapp.com";
 // Given A web page is opened
 // When Perform web interactions
 
 Given(/^A web page is opened$/, async function () {
-  // await browser.url("https://the-internet.herokuapp.com");
-  await browser.url(""); // can be empty as have set baseurl in wdio.conf.ts
+  // await browser.url(baseURL + "https://the-internet.herokuapp.com");
+  await browser.url(baseURL + ""); // can be empty as have set baseurl in wdio.conf.ts
   // These timeouts are set for the session
   // @param timeouts.implicit — Time in milliseconds to retry the element location strategy when finding an element.
   // @param timeouts.pageLoad — Time in milliseconds to wait for the document to finish loading.
@@ -55,12 +18,12 @@ Given(/^A web page is opened$/, async function () {
   await browser.maximizeWindow();
 });
 
-When(/^Perform web interactions$/, async function () {
+Then(/^Perform web interactions$/, async function () {
   console.log("Start web interactions");
   /**
    * input box
    */
-  // await browser.url("/inputs");
+  // await browser.url(baseURL + "/inputs");
   // let ele1 = await $("[type=number]");
 
   // await ele1.moveTo(); // move to element
@@ -87,7 +50,7 @@ When(/^Perform web interactions$/, async function () {
   /**
    * dropdown
    */
-  // await browser.url("/dropdown");
+  // await browser.url(baseURL + "/dropdown");
 
   // let ele2 = await $(`//select/option[@selected="selected"]`);
   // let val = await ele2.getText();
@@ -125,7 +88,7 @@ When(/^Perform web interactions$/, async function () {
   /**
    * checkbox
    */
-  // await browser.url("/checkboxes");
+  // await browser.url(baseURL + "/checkboxes");
 
   // let arrBoxes = [];
   // let chkBoxes = $$(`//input[@type="checkbox"]`);
@@ -143,7 +106,7 @@ When(/^Perform web interactions$/, async function () {
   /**
    * windows
    */
-  // await browser.url("/windows");
+  // await browser.url(baseURL + "/windows");
   // const originalWindowTitle = await browser.getTitle();
   // await $(`=Click Here`).click(); // the application (web browser) creates the new window not webdriverIO
   // await $(`=Elemental Selenium`).click();
@@ -182,7 +145,7 @@ When(/^Perform web interactions$/, async function () {
   // console.log(`>>>>> currentWindowTitle: ${currentWindowTitle}`);
   // chai.expect(currentWindowTitle).to.equal(originalWindowTitle);
 
-  // await browser.url("/javascript_alerts");
+  // await browser.url(baseURL + "/javascript_alerts");
   // await $(`button=Click for JS Alert`).click();
   // if (await browser.isAlertOpen()) {
   //   await browser.pause(2000);
@@ -218,7 +181,7 @@ When(/^Perform web interactions$/, async function () {
   /**
    * File uploads
    */
-  // await browser.url("/upload");
+  // await browser.url(baseURL + "/upload");
   // let chooseFile = $(`#file-upload`);
 
   // const currentWorkingDir = process.cwd();
@@ -233,7 +196,7 @@ When(/^Perform web interactions$/, async function () {
   /**
    * Frames
    */
-  // await browser.url("/frames");
+  // await browser.url(baseURL + "/frames");
   // await $(`[href='/iframe']`).click();
 
   // // need to switch to frame
@@ -256,7 +219,61 @@ When(/^Perform web interactions$/, async function () {
 
   /**
    * Basic scrolling
+   * section 6, 30
+   * */
+
+  /**
+   * Web Tables
    */
+  await browser.url(baseURL + "/tables");
+
+  let rowCount = await $$(`//table[@id="table1"]/tbody/tr`).length;
+  console.log(`>>>>> rowCount = ${rowCount}`);
+  chai.expect(rowCount).to.equal(4);
+
+  let colCount = await $$(`//table[@id="table1"]/thead/tr/th`).length;
+  console.log(`>>>>> colCount = ${colCount}`);
+  chai.expect(colCount).to.equal(6);
+
+  console.log(`>>>>> browser \n ${JSON.stringify(browser)}`);
+  let ele = await $(`//table[@id="table1"]`);
+
+  console.log(`>>>>> ele : \n ${JSON.stringify(ele)}`);
+
+  // Read table into structured object
+  let tableArr = [];
+  for (let i = 1; i <= rowCount; i++) {
+    // iterate from 1 and till <= as dom is number not index
+    let personObj = {
+      lastname: "",
+      firstname: "",
+      email: "",
+      due: "",
+      web: "",
+    };
+
+    for (let j = 1; j <= colCount; j++) {
+      // iterate from 1 and till <= as dom is number not index
+      let cellValue = await $(
+        `//table[@id="table1"]/tbody/tr[${i}]/td[${j}]`
+      ).getText();
+      // console.log(`>>>>> colCount = ${colCount}`);
+      // assign value to personObj
+      if (j === 1) personObj.lastname = cellValue;
+      if (j === 2) personObj.firstname = cellValue;
+      if (j === 3) personObj.email = cellValue;
+      if (j === 4) personObj.due = cellValue;
+      if (j === 5) personObj.web = cellValue;
+    }
+
+    // only push if not empty object for eg if you add a condition above
+    if (personObj.firstname)
+      // ie if a truthy value - falsey values are null, empty, undefined, zero, not a number or empty string
+      tableArr.push(personObj);
+  }
+
+  // stringify array to json obj
+  console.log(`>>>>> tableArr = ${JSON.stringify(tableArr)}`);
 
   // await browser.debug();
 });

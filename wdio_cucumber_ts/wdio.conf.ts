@@ -82,11 +82,21 @@ export const config: WebdriverIO.Config = {
       maxInstances: 5,
       //
       browserName: "chrome",
+      "goog:chromeOptions": {
+        // https://www.chromium.org/developers/how-tos/run-chromium-with-flags/
+        // https://peter.sh/experiments/chromium-command-line-switches/
+        // for example if want to run in docker or linux --disable-web-security
+        args: ["--disable - web - security"],
+      },
       acceptInsecureCerts: true,
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.
       // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
       // excludeDriverLogs: ['bugreport', 'server'],
+
+      // can add any capability here for example from printing the browser and element objects into a .json (see ./data/samples/)
+      // script is the browser.execute or browser.executeAsync max timeout
+      timeouts: { implicit: 15000, pageLoad: 20000, script: 30000 },
     },
   ],
   //
@@ -120,7 +130,8 @@ export const config: WebdriverIO.Config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: "https://the-internet.herokuapp.com", // general convention is to remove the trailing / will add when building required url
+  // baseUrl: "https://the-internet.herokuapp.com", // general convention is to remove the trailing / will add when building required url
+  baseUrl: "",
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -192,9 +203,11 @@ export const config: WebdriverIO.Config = {
     // <boolean> fail if there are any undefined or pending steps
     strict: false,
     // <string> (expression) only execute the features or scenarios with tags matching the expression
-    tagExpression: "@demo",
+    // tagExpression: "@runNow",
+    tagExpression: "",
     // <number> timeout for step definitions
-    timeout: 60000,
+    // This is the max time that the step definitions must all be executed
+    timeout: 300000,
     // <boolean> Enable this config to treat undefined definitions as warnings.
     ignoreUndefinedDefinitions: false,
   },

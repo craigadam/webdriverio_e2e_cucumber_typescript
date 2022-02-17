@@ -1,0 +1,3 @@
+
+launch repl with chrome browser
+npx wdio repl chrome

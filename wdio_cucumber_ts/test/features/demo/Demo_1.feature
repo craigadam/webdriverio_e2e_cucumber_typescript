@@ -4,9 +4,9 @@
 # "scripts": {
 # "wdio": "wdio run ./wdio.conf.ts"
 # },
-# and the tagExpression includes the @demo notation
+# and the tagExpression includes the @runNow notation
 #  // <string> (expression) only execute the features or scenarios with tags matching the expression
-# tagExpression: "@demo",
+# tagExpression: "@runNow",
 # > npm run wdio
 
 
@@ -14,7 +14,7 @@ Feature: Demo Feature
 
     Feature Description
 
-    # @demo
+    @runNow @smoke
     Scenario Outline: Run first demo feature
         Given Google page is opened
         When Search with <SearchItem>
