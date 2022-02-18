@@ -4,11 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "runNow": "wdio run ./wdio.conf.ts --cucumberOpts.tagExpression='@runNow'",
-    "smoke": "wdio run ./wdio.conf.ts --cucumberOpts.tagExpression='@smoke'",
-    "wdio": "wdio run ./wdio.conf.ts"
+    "test:runNow:Debug": "set LOG_LEVEL=debug && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@runNow'",
+    "test:runNow": "set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@runNow'",
+    "test:smoke": "set HEADLESS=True && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@smoke'",
+    "test:wdio": "set HEADLESS=False && wdio run ./config/wdio.test.conf.ts",
+    "uat:runNow": "set HEADLESS=False && wdio run ./config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@runNow'",
+    "uat:smoke": "set HEADLESS=True && wdio run ./config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@smoke'"
   },
-  "keywords": [],
+  "keywords": [
+    "wdio",
+    "cucumber",
+    "e2e",
+    "tests"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -25,6 +33,7 @@
   },
   "dependencies": {
     "@types/chai": "^4.3.0",
+    "dotenv": "^16.0.0",
     "save": "^2.4.0"
   }
 }

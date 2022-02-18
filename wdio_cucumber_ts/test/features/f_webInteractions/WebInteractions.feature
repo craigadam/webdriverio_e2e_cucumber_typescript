@@ -15,7 +15,7 @@ Feature: Web Interactions
 
     Feature Description
 
-    @runNow
+    # @runNow
     Scenario Outline: Demo Web Interactions
         Given A web page is opened
         Then Perform web interactions

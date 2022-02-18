@@ -14,12 +14,12 @@ Feature: Demo Feature
 
     Feature Description
 
-    @runNow @smoke
+    # @runNow @smoke
     Scenario Outline: Run first demo feature
         Given Google page is opened
-        When Search with <SearchItem>
-        Then Click on the first match
-        Then URL should match <Expected URL>
+        # When Search with <SearchItem>
+        # Then Click on the first match
+        # Then URL should match <Expected URL>
 
         Examples:
             | TestID     | SearchItem | Expected URL          |

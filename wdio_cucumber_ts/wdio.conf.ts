@@ -1,3 +1,64 @@
+//import the enviromant variables from .env file
+import dotenv from "dotenv";
+
+// trigger the load
+dotenv.config();
+// let username = process.env.USERNAME;
+// console.log(`>>>>> The process env parameter: ${username}`);
+
+// HEADLESS can be set at runtime via cmdline or script - can then use in the config
+let headless: boolean | undefined = convertToBoolean(
+  process.env.HEADLESS.trim()
+);
+// console.log(`>>>>> headless typeof headless: ${typeof headless}`);
+// console.log(`>>>>> The headless flag: ${headless}`);
+// if (headless) {
+//   console.log("headless is True");
+// } else {
+//   console.log("headless is NOT True");
+// }
+
+// Handle the log level if passed via cmdline (or cmdline script in package.json)
+// switch is handled via nested ternary when setting loglevel key
+// trace | debug | info | warn | error | silent
+var log_level: string | undefined = process.env.LOG_LEVEL;
+if (!log_level) {
+  var log_level: string = "falsey";
+}
+var log_level: string = log_level.toLowerCase().trim();
+
+// console.log(`>>>>> typeof log_level: ${typeof log_level}`);
+// console.log(`>>>>> log_level: ${log_level}`);
+// if (log_level === "debug") {
+//   console.log("log_level is debug");
+// } else {
+//   console.log("log_level is NOT debug");
+// }
+
+/**
+ * Ternary 
+ * condition1 ? value1
+         : condition2 ? value2
+         : condition3 ? value3
+         : value4;
+ */
+// let result =
+//   log_level === "trace"
+//     ? "trace"
+//     : log_level === "debug"
+//     ? "debug"
+//     : log_level === "info"
+//     ? "info"
+//     : log_level === "warn"
+//     ? "warn"
+//     : log_level === "error"
+//     ? "error"
+//     : log_level === "silent"
+//     ? "silent"
+//     : "silent";
+
+// console.log(`The reults is ${result}`);
+
 export const config: WebdriverIO.Config = {
   //
   // ====================
@@ -76,18 +137,63 @@ export const config: WebdriverIO.Config = {
   //
   capabilities: [
     {
-      // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-      // grid with only 5 firefox instances available you can make sure that not more than
-      // 5 instances get started at a time.
-      maxInstances: 5,
-      //
+      /**
+       * maxInstances can get overwritten per capability. So if you have an in-house Selenium
+       * grid with only 5 firefox instances available you can make sure that not more than
+       * 5 instances get started at a time.
+       *
+       *
+       *  */
+      maxInstances: 5, // e2e do not go more than 5 but recommend 3, if go to cloud or non local host can increase to what need eg. 50
+
+      /**
+       * Set browser capabilities
+       * CHROME
+       * https://www.chromium.org/developers/how-tos/run-chromium-with-flags/
+       * https://peter.sh/experiments/chromium-command-line-switches/
+       *
+       * for example if want to run in docker or linux:
+       * --disable-web-security //will disable any ssl authentication
+       *
+       * --headless will be ok for local but not docker / linux
+       *
+       */
+
+      /**
+         *  for docker / linux:
+        --disable-dev-shm-usage // linux
+        --no-sandbox // any headless
+        --window-size=1920,1080
+        --disable-gpu
+        --proxy-server=https://domain
+        binary=<path to chrome binary>
+        --auth-server-whitelist="_"  // FORCE LOGIN FOR SINGLE SIGNON applications if need to sign on with different user
+        */
+
       browserName: "chrome",
       "goog:chromeOptions": {
-        // https://www.chromium.org/developers/how-tos/run-chromium-with-flags/
-        // https://peter.sh/experiments/chromium-command-line-switches/
-        // for example if want to run in docker or linux --disable-web-security
-        args: ["--disable - web - security"],
+        // if headless is true then return args that headless requires, otherwise return the empty []
+        args:
+          headless === true
+            ? [
+                "--disable-web-security",
+                "--headless",
+                "--disable-dev-shm-usage",
+                "--no-sandbox",
+                "--window-size=1920,1080",
+              ]
+            : [],
       },
+
+      // no switch based on headless parameter
+      // args: [
+      //   "--disable-web-security",
+      //   "--headless",
+      //   "--disable-dev-shm-usage",
+      //   "--no-sandbox",
+      //   "--window-size=1920,1080",
+      // ],
+
       acceptInsecureCerts: true,
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.
@@ -106,7 +212,23 @@ export const config: WebdriverIO.Config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: "info",
+  logLevel:
+    log_level === "trace"
+      ? "trace"
+      : log_level === "debug"
+      ? "debug"
+      : log_level === "info"
+      ? "info"
+      : log_level === "warn"
+      ? "warn"
+      : log_level === "error"
+      ? "error"
+      : log_level === "silent"
+      ? "silent"
+      : // else default to silent
+        "silent",
+
+  // logLevel: log_level.toLowerCase().trim() === "debug" ? "debug" : "silent",
   //
   // Set specific log levels per logger
   // loggers:
@@ -131,7 +253,7 @@ export const config: WebdriverIO.Config = {
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
   // baseUrl: "https://the-internet.herokuapp.com", // general convention is to remove the trailing / will add when building required url
-  baseUrl: "",
+  // baseUrl: "",
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -368,3 +490,11 @@ export const config: WebdriverIO.Config = {
   //onReload: function(oldSessionId, newSessionId) {
   //}
 };
+
+function convertToBoolean(input: string): boolean | undefined {
+  try {
+    return JSON.parse(input);
+  } catch (e) {
+    return undefined;
+  }
+}
