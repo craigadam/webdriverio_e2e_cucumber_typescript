@@ -1,0 +1,243 @@
+{
+  "gherkinDocument": {
+    "feature": {
+      "tags": [],
+      "location": { "line": 15, "column": 1 },
+      "language": "en",
+      "keyword": "Feature",
+      "name": "Inventory",
+      "description": "    Feature Description",
+      "children": [
+        {
+          "scenario": {
+            "id": "12",
+            "tags": [
+              {
+                "location": { "line": 19, "column": 5 },
+                "name": "@runNow",
+                "id": "10"
+              },
+              {
+                "location": { "line": 19, "column": 13 },
+                "name": "@smoke",
+                "id": "11"
+              }
+            ],
+            "location": { "line": 20, "column": 5 },
+            "keyword": "Scenario Outline",
+            "name": "<TestID>: Demo Inventory",
+            "description": "",
+            "steps": [
+              {
+                "id": "4",
+                "location": { "line": 22, "column": 9 },
+                "keyword": "Given ",
+                "text": "As a standard user I login to inventory web app",
+                "dataTable": {
+                  "location": { "line": 24, "column": 13 },
+                  "rows": [
+                    {
+                      "id": "0",
+                      "location": { "line": 24, "column": 13 },
+                      "cells": [
+                        {
+                          "location": { "line": 24, "column": 15 },
+                          "value": "UserType"
+                        },
+                        {
+                          "location": { "line": 24, "column": 26 },
+                          "value": "Username"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "1",
+                      "location": { "line": 25, "column": 13 },
+                      "cells": [
+                        {
+                          "location": { "line": 25, "column": 15 },
+                          "value": "StdUser"
+                        },
+                        {
+                          "location": { "line": 25, "column": 26 },
+                          "value": "standard_user"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2",
+                      "location": { "line": 26, "column": 13 },
+                      "cells": [
+                        {
+                          "location": { "line": 26, "column": 15 },
+                          "value": "ProbUser"
+                        },
+                        {
+                          "location": { "line": 26, "column": 26 },
+                          "value": "problem_user"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "3",
+                      "location": { "line": 27, "column": 13 },
+                      "cells": [
+                        {
+                          "location": { "line": 27, "column": 15 },
+                          "value": "PerfUser"
+                        },
+                        {
+                          "location": { "line": 27, "column": 26 },
+                          "value": "performance_glitch_user"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "5",
+                "location": { "line": 29, "column": 9 },
+                "keyword": "Then ",
+                "text": "Inventory page should list <ExpectedNumberOfProducts>"
+              },
+              {
+                "id": "6",
+                "location": { "line": 30, "column": 9 },
+                "keyword": "Then ",
+                "text": "Validate all products have a valid price"
+              }
+            ],
+            "examples": [
+              {
+                "id": "9",
+                "tags": [],
+                "location": { "line": 33, "column": 9 },
+                "keyword": "Examples",
+                "name": "",
+                "description": "",
+                "tableHeader": {
+                  "id": "7",
+                  "location": { "line": 34, "column": 13 },
+                  "cells": [
+                    {
+                      "location": { "line": 34, "column": 15 },
+                      "value": "TestID"
+                    },
+                    {
+                      "location": { "line": 34, "column": 27 },
+                      "value": "ExpectedNumberOfProducts"
+                    }
+                  ]
+                },
+                "tableBody": [
+                  {
+                    "id": "8",
+                    "location": { "line": 35, "column": 13 },
+                    "cells": [
+                      {
+                        "location": { "line": 35, "column": 15 },
+                        "value": "INV_TC001"
+                      },
+                      { "location": { "line": 35, "column": 27 }, "value": "6" }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "comments": [
+      { "location": { "line": 3, "column": 1 }, "text": "# To run" },
+      {
+        "location": { "line": 4, "column": 1 },
+        "text": "# The wdio script in the package.json is :"
+      },
+      { "location": { "line": 5, "column": 1 }, "text": "# \"scripts\": {" },
+      {
+        "location": { "line": 6, "column": 1 },
+        "text": "# \"wdio\": \"wdio run ./wdio.conf.ts\""
+      },
+      { "location": { "line": 7, "column": 1 }, "text": "# }," },
+      {
+        "location": { "line": 8, "column": 1 },
+        "text": "# and the tagExpression includes the @runNow notation"
+      },
+      {
+        "location": { "line": 9, "column": 1 },
+        "text": "#  // <string> (expression) only execute the features or scenarios with tags matching the expression"
+      },
+      {
+        "location": { "line": 10, "column": 1 },
+        "text": "# tagExpression: \"@runNow\","
+      },
+      { "location": { "line": 11, "column": 1 }, "text": "# > npm run wdio" },
+      {
+        "location": { "line": 18, "column": 1 },
+        "text": "# ADD TestID to Scenario Outline for better reporting.  For Scenario then hardcode "
+      },
+      {
+        "location": { "line": 21, "column": 1 },
+        "text": "        # Given Login to inventory web app"
+      },
+      {
+        "location": { "line": 23, "column": 1 },
+        "text": "            # This data table will come as the last arg in the step defn - ie to catch as this data as the last arg"
+      }
+    ],
+    "uri": "D:\\workspaces\\javascript\\webdriverio_e2e_cucumber_typescript\\wdio_cucumber_ts\\test\\features\\f_inventory\\Inventory.feature"
+  },
+  "pickle": {
+    "id": "16",
+    "uri": "D:\\workspaces\\javascript\\webdriverio_e2e_cucumber_typescript\\wdio_cucumber_ts\\test\\features\\f_inventory\\Inventory.feature",
+    "astNodeIds": ["12", "8"],
+    "name": "INV_TC001: Demo Inventory",
+    "language": "en",
+    "steps": [
+      {
+        "id": "13",
+        "text": "As a standard user I login to inventory web app",
+        "argument": {
+          "dataTable": {
+            "rows": [
+              { "cells": [{ "value": "UserType" }, { "value": "Username" }] },
+              {
+                "cells": [{ "value": "StdUser" }, { "value": "standard_user" }]
+              },
+              {
+                "cells": [{ "value": "ProbUser" }, { "value": "problem_user" }]
+              },
+              {
+                "cells": [
+                  { "value": "PerfUser" },
+                  { "value": "performance_glitch_user" }
+                ]
+              }
+            ]
+          }
+        },
+        "astNodeIds": ["4", "8"],
+        "keyword": "Given "
+      },
+      {
+        "id": "14",
+        "text": "Inventory page should list 6",
+        "astNodeIds": ["5", "8"],
+        "keyword": "Then "
+      },
+      {
+        "id": "15",
+        "text": "Validate all products have a valid price",
+        "astNodeIds": ["6", "8"],
+        "keyword": "Then "
+      }
+    ],
+    "tags": [
+      { "name": "@runNow", "astNodeId": "10" },
+      { "name": "@smoke", "astNodeId": "11" }
+    ]
+  },
+  "testCaseStartedId": "40"
+}

@@ -1,6 +1,8 @@
 import { Given } from "@wdio/cucumber-framework";
 import chai from "chai";
 
+import logger from "../../helper/logger"
+
 // Given(/^Login to inventory web app$/, async function () { // replace with more detail and use regex to get values
 
 // Given(/^As a standard user I login to inventory web app$/, async () => {
@@ -13,6 +15,11 @@ Given(
      * updated to get the value from the config file
      * note will need to include the ignore ts error as the property is a custom property we have added
      */
+
+
+    logger.info(`>> userType: \n ${userType}`)
+    logger.info(`>> this.testId}: \n ${this.testId}`)
+
 
     console.log(`>>>>> userType: \n ${userType}`);
 
@@ -49,5 +56,25 @@ Given(
     loginBtn.click();
     browser.pause(2000);
     //   await browser.debug();
+
+
+    // assume retrieved this value
+    // want to 
+    console.log(`this.appId before: ${this.appId}`);
+
+    // this represents the world constructor
+    this.appId = "ABC123 value to pass via world.ts"
+
+    console.log(`this.appId after: ${this.appId}`);
+
+    // NOT passing use browser.config can assign any variable but now global!
+    // need to ignore custom keys
+    // @ts-ignore
+    browser.config.appID = "value passed to the browser.config as a custom key"
+    
+    // @ts-ignore
+    console.log(`>>>>> this.testId in given step: ${this.testId}`);
+
+
   }
 );

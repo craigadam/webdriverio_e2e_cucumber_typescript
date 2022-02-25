@@ -1,10 +1,27 @@
-import { Then } from "@wdio/cucumber-framework";
+import { setWorldConstructor, Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 import { ElementArray } from "chromedriver";
 import { Element } from "chromedriver";
+import logger from "../../helper/logger"
 
 Then(/^Inventory page should list (.*)$/, async (expectedNumberOfProducts) => {
   console.log(`>>>>> ExpectedNumberOfProducts = ${expectedNumberOfProducts}`);
+
+  logger.info(`>> login ... `)
+
+
+  // @ts-ignore
+  console.log(`>>>>> this.appId in next step: ${this.appId}`);  // NO THIS IS NOT WORKING AS EXPECTED RETURNS undefined! SECTION 57
+
+  // need to ignore custom keys
+  // @ts-ignore
+  console.log(`>>>>> browser.config.appID: ${browser.config.appID}`);
+ 
+   // @ts-ignore
+  console.log(`>>>>> this.testId in then step: ${this.testId}`);
+
+  // throw Error(`FORCE FAIL 10`)
+
   await $(`.inventory_container`).waitForDisplayed();
   // validate on expected page
   const currentTitle: string = await browser.getTitle();
@@ -75,6 +92,7 @@ Then(/^Validate all products have a valid price$/, async function () {
   }, 0);
 
   console.log(`sumPrices = ${sumPrices}`);
+
 
   //   await browser.debug();
 });

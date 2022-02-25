@@ -1,4 +1,5 @@
-@anyTag - this tag will be for all senarios in this feature
+# this tag will be for all senarios in this feature
+@anyTag
 Feature: Cucumber demo
     Feature Description
     can add any information you like here

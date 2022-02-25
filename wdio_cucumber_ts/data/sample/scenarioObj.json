@@ -1,0 +1,34 @@
+{
+  "id": "0",
+  "uri": "D:\\workspaces\\javascript\\webdriverio_e2e_cucumber_typescript\\wdio_cucumber_ts\\test\\features\\f_inventory\\Inventory.feature",
+  "astNodeIds": ["10", "6"],
+  "name": "Demo Inventory",
+  "language": "en",
+  "steps": [
+    {
+      "id": "11",
+      "text": "As a standard user I login to inventory web app",
+      "argument": {
+        "dataTable": {
+          "rows": [
+            { "cells": [{ "value": "UserType" }, { "value": "Username" }] },
+            { "cells": [{ "value": "StdUser" }, { "value": "standard_user" }] },
+            { "cells": [{ "value": "ProbUser" }, { "value": "problem_user" }] },
+            {
+              "cells": [
+                { "value": "PerfUser" },
+                { "value": "performance_glitch_user" }
+              ]
+            }
+          ]
+        }
+      },
+      "astNodeIds": ["4", "6"],
+      "keyword": "Given "
+    }
+  ],
+  "tags": [
+    { "name": "@runNow", "astNodeId": "8" },
+    { "name": "@smoke", "astNodeId": "9" }
+  ]
+}
