@@ -2,36 +2,51 @@ import { setWorldConstructor, Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 import { ElementArray } from "chromedriver";
 import { Element } from "chromedriver";
-import logger from "../../helper/logger"
+import logger from "../../helper/logger";
+import allure from "@wdio/allure-reporter"
 
 Then(/^Inventory page should list (.*)$/, async (expectedNumberOfProducts) => {
-  console.log(`>>>>> ExpectedNumberOfProducts = ${expectedNumberOfProducts}`);
+  try {
+    console.log(`>>>>> ExpectedNumberOfProducts = ${expectedNumberOfProducts}`);
 
-  logger.info(`>> login ... `)
+    logger.info(`>> login ... `);
 
+    // @ts-ignore (to force reference error as have not declared)
+    // console.log(unknownVariable); // ReferenceError: unknownVariable is not defined
 
-  // @ts-ignore
-  console.log(`>>>>> this.appId in next step: ${this.appId}`);  // NO THIS IS NOT WORKING AS EXPECTED RETURNS undefined! SECTION 57
+    // @ts-ignore
+    console.log(`>>>>> this.appId in next step: ${this.appId}`); // NO THIS IS NOT WORKING AS EXPECTED RETURNS undefined! SECTION 57
 
-  // need to ignore custom keys
-  // @ts-ignore
-  console.log(`>>>>> browser.config.appID: ${browser.config.appID}`);
- 
-   // @ts-ignore
-  console.log(`>>>>> this.testId in then step: ${this.testId}`);
+    // need to ignore custom keys
+    // @ts-ignore
+    console.log(`>>>>> browser.config.appID: ${browser.config.appID}`);
 
-  // throw Error(`FORCE FAIL 10`)
+    // @ts-ignore
+    console.log(`>>>>> this.testId in then step: ${this.testId}`);
 
-  await $(`.inventory_container`).waitForDisplayed();
-  // validate on expected page
-  const currentTitle: string = await browser.getTitle();
-  chai.expect(currentTitle).to.equal(`Swag Labs`);
+    // throw Error(`FORCE FAIL 10`)
 
-  if (!expectedNumberOfProducts) throw Error(`invalid number is provided`); // if there is not a valid number then throw error using falsey concept
-  console.log(`>>>>> NumberOfProducts = ${expectedNumberOfProducts}`);
-  const titleElements = await $$(`div[class*='inventory_item_label']`);
-  const actualNoItems: number = await titleElements.length;
-  chai.expect(actualNoItems).to.equal(parseInt(expectedNumberOfProducts)); // ===
+    await $(`.inventory_container`).waitForDisplayed();
+    // validate on expected page
+    const currentTitle: string = await browser.getTitle();
+    chai.expect(currentTitle).to.equal(`Swag Labs`);
+
+    if (!expectedNumberOfProducts) throw Error(`invalid number is provided`); // if there is not a valid number then throw error using falsey concept
+
+    console.log(`>>>>> NumberOfProducts = ${expectedNumberOfProducts}`);
+    const titleElements = await $$(`div[class*='inventory_item_label']`);
+    const actualNoItems: number = await titleElements.length;
+    chai.expect(actualNoItems).to.equal(parseInt(expectedNumberOfProducts)); // ===
+  } catch (err) {
+    console.log(`typeof(err): ${typeof err}`);
+    console.log(`(err.name): ${err.name}`);
+    console.log(`(err.message): ${err.message}`);
+    // log the error
+    // @ts-ignore
+    err.message = `${browser.config.testId}: Failed when comparing product count, ${err.message}`
+    logger.error(err.message)
+    throw err // stop and fail the test
+  }
 });
 
 Then(/^Validate all products have a valid price$/, async function () {
@@ -92,7 +107,6 @@ Then(/^Validate all products have a valid price$/, async function () {
   }, 0);
 
   console.log(`sumPrices = ${sumPrices}`);
-
 
   //   await browser.debug();
 });

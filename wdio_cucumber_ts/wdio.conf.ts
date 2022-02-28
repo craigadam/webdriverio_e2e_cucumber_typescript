@@ -4,6 +4,7 @@ import type { Capabilities } from "@wdio/types";
 import dotenv from "dotenv";
 import logger from "./test/helper/logger"
 import allure from "@wdio/allure-reporter"
+import fs from "fs"  // FILES
 
 // trigger the load
 dotenv.config();
@@ -27,11 +28,11 @@ if (headless) {
 // Handle the log level if passed via cmdline (or cmdline script in package.json)
 // switch is handled via nested ternary when setting loglevel key
 // trace | debug | info | warn | error | silent
-var log_level: string | undefined = process.env.LOG_LEVEL;
-if (!log_level) {
-  var log_level: string = "falsey";
+var log_level_rpt: string | undefined = process.env.LOG_LEVEL_RPT;
+if (!log_level_rpt) {
+  var log_level_rpt: string = "falsey";
 }
-var log_level: string = log_level.toLowerCase().trim();
+var log_level_rpt: string = log_level_rpt.toLowerCase().trim();
 
 // console.log(`>>>>> typeof log_level: ${typeof log_level}`);
 // console.log(`>>>>> log_level: ${log_level}`);
@@ -220,17 +221,17 @@ export const config: WebdriverIO.Config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel:
-    log_level === "trace"
+  log_level_rpt === "trace"
       ? "trace"
-      : log_level === "debug"
+      : log_level_rpt === "debug"
       ? "debug"
-      : log_level === "info"
+      : log_level_rpt === "info"
       ? "info"
-      : log_level === "warn"
+      : log_level_rpt === "warn"
       ? "warn"
-      : log_level === "error"
+      : log_level_rpt === "error"
       ? "error"
-      : log_level === "silent"
+      : log_level_rpt === "silent"
       ? "silent"
       : // else default to silent
         "silent",
@@ -364,8 +365,16 @@ export const config: WebdriverIO.Config = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: function (config, capabilities) {
+
+    /**
+     * delete previous results if running locally ie if set RUNNER = LOCAL in cmd or .env file
+     */
+    if(process.env.RUNNER === "LOCAL" && fs.existsSync("./results/allure-results")){
+      fs.rmdirSync("./results/allure-results", {recursive: true})
+
+    }
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialise specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -500,7 +509,8 @@ export const config: WebdriverIO.Config = {
 
     // Add details to Allure reporter here 
     // @ts-ignore (custom key)
-    allure.addEnvironment("Environ : ", browser.config.environment)
+    // NOT WORKINGS
+    allure.addEnvironment("Environ : ", browser.config.environment) 
 
   },
 

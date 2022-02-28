@@ -2,7 +2,7 @@ import { Given } from "@wdio/cucumber-framework";
 import chai from "chai";
 
 import logger from "../../helper/logger"
-
+import reporter from "../../helper/reporter"
 // Given(/^Login to inventory web app$/, async function () { // replace with more detail and use regex to get values
 
 // Given(/^As a standard user I login to inventory web app$/, async () => {
@@ -19,11 +19,16 @@ Given(
 
     logger.info(`>> userType: \n ${userType}`)
     logger.info(`>> this.testId}: \n ${this.testId}`)
-
+    logger.info(`>> login ... `)
 
     console.log(`>>>>> userType: \n ${userType}`);
 
     console.log(`>>>>> typeof dataTable: ${typeof dataTable}`); // typefo will return Object for both array and Object
+
+    // @ts-ignore
+    let testId: string = browser.config.testId
+    reporter.addStep(testId, 'info', `>> userType: \n ${userType}`)
+
 
     let dt: Array<string> = dataTable.hashes();
     console.log(`>>>>> typeof dataTable: ${typeof dt}`); // object

@@ -11,6 +11,9 @@
 # > npm run wdio
 # > npm run test:smoke
 # > npm run test:smoke > ./results/logs/output.txt
+# > allure serve ./results/allure-results
+
+
 
 
 
@@ -35,3 +38,12 @@ Feature: Inventory
         Examples:
             | TestID    | ExpectedNumberOfProducts |
             | INV_TC001 | 6                        |
+            # Force fail on test data error
+            # Error: invalid number is provided
+            # | INV_TC002 |                         | 
+            # FORCE Assersion fail
+            # AssertionError
+            # + expected - actual
+            # -6
+            # +9
+            | INV_TC003 | 9                        |
