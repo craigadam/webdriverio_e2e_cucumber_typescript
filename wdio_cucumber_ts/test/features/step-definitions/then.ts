@@ -118,3 +118,10 @@ Then(/^Validate all products have a valid price$/, async function () {
 
   //   await browser.debug();
 });
+
+
+
+Then(/^Verify if all customers exist in customers list$/, () => {
+	return true;
+});
+

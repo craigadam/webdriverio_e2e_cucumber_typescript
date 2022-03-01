@@ -21,7 +21,7 @@ Feature: Inventory
 
     Feature Description
     # ADD TestID to Scenario Outline for better reporting.  For Scenario then hardcode
-    @runNow @smoke
+    # @runNow @smoke
     Scenario Outline: <TestID>: Demo Inventory
         # Given Login to inventory web app
         Given As a standard user I login to inventory web app

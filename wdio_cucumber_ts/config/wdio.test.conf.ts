@@ -5,4 +5,6 @@ export const config = Object.assign(baseConfig, {
   // All test specific key val pairs
   environment: "TEST",
   sauceDemoURL: "https://www.saucedemo.com",
+  reqresBaseUrl: "https://reqres.in",
+  nopCommerceUrl: "https://admin-demo.nopcommerce.com/"
 });
