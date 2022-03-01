@@ -20,7 +20,7 @@
 Feature: Inventory
 
     Feature Description
-# ADD TestID to Scenario Outline for better reporting.  For Scenario then hardcode 
+    # ADD TestID to Scenario Outline for better reporting.  For Scenario then hardcode
     @runNow @smoke
     Scenario Outline: <TestID>: Demo Inventory
         # Given Login to inventory web app
@@ -38,12 +38,12 @@ Feature: Inventory
         Examples:
             | TestID    | ExpectedNumberOfProducts |
             | INV_TC001 | 6                        |
-            # Force fail on test data error
-            # Error: invalid number is provided
-            # | INV_TC002 |                         | 
-            # FORCE Assersion fail
-            # AssertionError
-            # + expected - actual
-            # -6
-            # +9
-            | INV_TC003 | 9                        |
+# Force fail on test data error
+# Error: invalid number is provided
+# | INV_TC002 |                         |
+# FORCE Assersion fail
+# AssertionError
+# + expected - actual
+# -6
+# +9
+# | INV_TC003 | 9                        |

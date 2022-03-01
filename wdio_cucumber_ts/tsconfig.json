@@ -1,8 +1,17 @@
 {
     "compilerOptions": {
 
+        /*
+        Modern browsers support all ES6 features, so ES6 is a good choice. You might choose to set a lower target if your code is deployed to older environments, or a higher target if your code is guaranteed to run in newer environments.
+        */
+        // "target": "ES5", // default       
+        // "target": "ES6", // recommended
+        "target": "ES2019", // e2e course
+        "module": "CommonJS", // e2e course good backward compatibility
+        "resolveJsonModule": true, // interact with json as normal file
         // allow compatibility with older models
         "esModuleInterop": true,
+        "suppressExcessPropertyErrors": true,
         
         // This will also allow auto complete
         "types": [
@@ -11,12 +20,9 @@
             "@wdio/cucumber-framework",
             "expect-webdriverio"
         ],
-        /*
-        Modern browsers support all ES6 features, so ES6 is a good choice. You might choose to set a lower target if your code is deployed to older environments, or a higher target if your code is guaranteed to run in newer environments.
-        */
-        // "target": "ES5", // default       
-        // "target": "ES6", // recommended
-        "target": "ES2019", // e2e course
-        "module": "CommonJS" // e2e course good backward compatibility
+      
+        
+    
+    
     }
 }

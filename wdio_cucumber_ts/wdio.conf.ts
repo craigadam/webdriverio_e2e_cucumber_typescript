@@ -2,28 +2,28 @@ import type { Capabilities } from "@wdio/types";
 
 //import the enviromant variables from .env file
 import dotenv from "dotenv";
-import logger from "./test/helper/logger"
-import allure from "@wdio/allure-reporter"
-import fs from "fs"  // FILES
+import logger from "./test/helper/logger";
+import allure from "@wdio/allure-reporter";
+import fs from "fs"; // FILES
 
 // trigger the load
-dotenv.config();
-// let username = process.env.USERNAME;
-// logger.info(`The process env parameter from the .env file: \n ${username}`)
+dotenv.config({ path: "../.env" });
+// let username: string | undefined = process.env.SAUCE_TEST_STD_USERNAME;
+// console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
+// let password: string | undefined = process.env.SAUCE_TEST_PASSWORD;
+// console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
 
 // HEADLESS can be set at runtime via cmdline or script - can then use in the config
 // let headless: boolean | undefined = convertToBoolean(
 //   process.env.HEADLESS.trim()
 // );
-let headless = convertToBoolean(process.env.HEADLESS.trim().toLowerCase())
+let headless = convertToBoolean(process.env.HEADLESS.trim().toLowerCase());
 // logger.info(`headlessBool is ${headless}`);
-if (headless) {
-  logger.info("headless is true");
-} else {
-  logger.info("headless is NOT true");
-}
-
-
+// if (headless) {
+//   logger.info("headless is true");
+// } else {
+//   logger.info("headless is NOT true");
+// }
 
 // Handle the log level if passed via cmdline (or cmdline script in package.json)
 // switch is handled via nested ternary when setting loglevel key
@@ -84,6 +84,9 @@ export const config: WebdriverIO.Config = {
   // If you need to configure how ts-node runs please use the
   // environment variables for ts-node or use wdio config's autoCompileOpts section.
   //
+
+  // Custom Field for current date
+  currentDt: new Date(), // Will get ts error Object literal may only specify known properties.  Can use suppressExcessPropertyErrors in tsConfig.json
 
   autoCompileOpts: {
     autoCompile: true,
@@ -189,8 +192,7 @@ export const config: WebdriverIO.Config = {
                 "--no-sandbox",
                 "--window-size=1920,1080",
               ]
-            : 
-            [],
+            : [],
       },
 
       // no switch based on headless parameter
@@ -221,7 +223,7 @@ export const config: WebdriverIO.Config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel:
-  log_level_rpt === "trace"
+    log_level_rpt === "trace"
       ? "trace"
       : log_level_rpt === "debug"
       ? "debug"
@@ -304,7 +306,6 @@ export const config: WebdriverIO.Config = {
   reporters: [
     "spec",
     [
-
       // in modules --> @wdio --> allure-reporter --> types.d.ts will give allure reporter options
       // these options apply during exection not building report
       // To generate and display:
@@ -366,13 +367,14 @@ export const config: WebdriverIO.Config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    */
   onPrepare: function (config, capabilities) {
-
     /**
      * delete previous results if running locally ie if set RUNNER = LOCAL in cmd or .env file
      */
-    if(process.env.RUNNER === "LOCAL" && fs.existsSync("./results/allure-results")){
-      fs.rmdirSync("./results/allure-results", {recursive: true})
-
+    if (
+      process.env.RUNNER === "LOCAL" &&
+      fs.existsSync("./results/allure-results")
+    ) {
+      fs.rmdirSync("./results/allure-results", { recursive: true });
     }
   },
   /**
@@ -429,30 +431,37 @@ export const config: WebdriverIO.Config = {
    */
   beforeScenario: function (world, context) {
     // console.log(`>>>>> World: ${JSON.stringify(world)}`);
-    let array = world.pickle.name.split(/:/)
-    if(array.length > 0){
-      this.testId = array[0]
+    let array = world.pickle.name.split(/:/);
+    if (array.length > 0) {
+      this.testId = array[0];
     }
-    if(!this.testId) {
-      throw Error(`cannot get this.testId for current senario: ${world.pickle.name}`)
+    if (!this.testId) {
+      throw Error(
+        `cannot get this.testId for current senario: ${world.pickle.name}`
+      );
     } else {
-
-      console.log(`this.testId for current senario: ${world.pickle.name} is ${this.testId}`);
+      // @ts-ignore
+      console.log(
+        `this.testId for current senario: ${world.pickle.name} is ${this.testId}`
+      );
     }
 
-    if(array.length > 0){
+    if (array.length > 0) {
       // @ts-ignore
-      browser.config.testId = array[0]
+      browser.config.testId = array[0];
     }
     // @ts-ignore
-    if(!browser.config.testId){
-      throw Error(`cannot get browser.config.testId for current senario: ${world.pickle.name}`)
-    } else {
-      // @ts-ignore
-      console.log(`browser.config.testId for current senario: ${world.pickle.name} is ${browser.config.testId}`);
+    if (!browser.config.testId) {
+      throw Error(
+        `cannot get browser.config.testId for current senario: ${world.pickle.name}`
+      );
     }
-
-
+    // else {
+    //   // @ts-ignore
+    //   console.log(
+    //     `browser.config.testId for current senario: ${world.pickle.name} is ${browser.config.testId}`
+    //   );
+    // }
   },
   /**
    *
@@ -462,9 +471,7 @@ export const config: WebdriverIO.Config = {
    * @param {Object}             context  Cucumber World object
    */
   beforeStep: function (step, scenario, context) {
-
     console.log(`>>>>> this.testId [before step] : ${this.testId}`);
-
   },
   /**
    *
@@ -506,12 +513,10 @@ export const config: WebdriverIO.Config = {
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
   afterFeature: function (uri, feature) {
-
-    // Add details to Allure reporter here 
+    // Add details to Allure reporter here
     // @ts-ignore (custom key)
     // NOT WORKINGS
-    allure.addEnvironment("Environ : ", browser.config.environment) 
-
+    allure.addEnvironment("Environ : ", browser.config.environment);
   },
 
   /**

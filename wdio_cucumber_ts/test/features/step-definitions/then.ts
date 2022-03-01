@@ -3,26 +3,34 @@ import chai from "chai";
 import { ElementArray } from "chromedriver";
 import { Element } from "chromedriver";
 import logger from "../../helper/logger";
-import allure from "@wdio/allure-reporter"
+// import allure from "@wdio/allure-reporter"; // moved to reporter.ts
+import reporter from "../../helper/reporter";
 
 Then(/^Inventory page should list (.*)$/, async (expectedNumberOfProducts) => {
+  // need to ignore custom keys
+  // @ts-ignore
+  let testId = browser.config.testId;
+
+  // @ts-ignore
+  console.log(`>>>>> this.testId in next step: ${this.testId}`); // NO THIS IS NOT WORKING AS EXPECTED RETURNS undefined! SECTION 57
+
+  console.log(`>>>>> browser.config.testId: ${testId}`);
+
+  // @ts-ignore
+  console.log(`>>>>> this.testId [Then 12] : ${this.testId}`);
+
   try {
+    reporter.addStep(
+      testId,
+      "info",
+      `>> ExpectedNumberOfProducts = ${expectedNumberOfProducts}`
+    );
     console.log(`>>>>> ExpectedNumberOfProducts = ${expectedNumberOfProducts}`);
 
     logger.info(`>> login ... `);
 
     // @ts-ignore (to force reference error as have not declared)
     // console.log(unknownVariable); // ReferenceError: unknownVariable is not defined
-
-    // @ts-ignore
-    console.log(`>>>>> this.appId in next step: ${this.appId}`); // NO THIS IS NOT WORKING AS EXPECTED RETURNS undefined! SECTION 57
-
-    // need to ignore custom keys
-    // @ts-ignore
-    console.log(`>>>>> browser.config.appID: ${browser.config.appID}`);
-
-    // @ts-ignore
-    console.log(`>>>>> this.testId in then step: ${this.testId}`);
 
     // throw Error(`FORCE FAIL 10`)
 
@@ -43,9 +51,9 @@ Then(/^Inventory page should list (.*)$/, async (expectedNumberOfProducts) => {
     console.log(`(err.message): ${err.message}`);
     // log the error
     // @ts-ignore
-    err.message = `${browser.config.testId}: Failed when comparing product count, ${err.message}`
-    logger.error(err.message)
-    throw err // stop and fail the test
+    err.message = `${browser.config.testId}: Failed when comparing product count, ${err.message}`;
+    logger.error(err.message);
+    throw err; // stop and fail the test
   }
 });
 
