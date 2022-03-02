@@ -9,8 +9,9 @@
 #  // <string> (expression) only execute the features or scenarios with tags matching the expression
 # tagExpression: "@runNow",
 # > npm run wdio
-# > npm run test:smoke
-# > npm run test:smoke > ./results/logs/output.txt
+# > npm run test:sauceInv:debug
+# > npm run test:sauceInv:headless > ./results/logs/output.txt
+# > npm run test:sauceInv:info
 # > allure serve ./results/allure-results
 
 
@@ -22,6 +23,7 @@ Feature: Inventory
     Feature Description
     # ADD TestID to Scenario Outline for better reporting.  For Scenario then hardcode
     # @runNow @smoke
+    @sauceInv
     Scenario Outline: <TestID>: Demo Inventory
         # Given Login to inventory web app
         Given As a standard user I login to inventory web app

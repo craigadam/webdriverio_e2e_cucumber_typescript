@@ -11,45 +11,32 @@ class HomePage extends Page {
 
   /**Page Objects */
   // in a getter function, will support the async function, it will be a general getter function
-  get usernameInputBox() {
-    return $(`#user-name`);
+  get emailInputBox() {
+    return $(`#Email`);
   }
 
   get passwordInputBox() {
-    // reporter.addStep(config.getTestId(),"error","Forcing failure with incorrect locator")
-    // return $(`#password_wrong`);
-    return $(`#password`);
+    return $(`#Password`);
   }
 
   get loginBtn() {
-    return $(`#login-button`);
+    return $(`button[type='submit']`);
   }
 
   /**Page Actions */
-  async pageLoaded(testId: string = "") {
+  async enterEmail(email: string, testId: string = "") {
+    if (!email) throw Error(`Given email: ${email} is not valid`);
     try {
-      let title: string = await browser.getTitle();
-      chai.expect(title).to.equal("Swag Labs");
-    } catch (err) {
-      err.message = `Error Sauce home page is NOT loaded: ${err.message}`;
-      reporter.addStep(testId, "error", err.message);
-      throw err;
-    }
-  }
-
-  async enterUsername(username: string, testId: string = "") {
-    if (!username) throw Error(`Given username: ${username} is not valid`);
-    try {
-      username = username.trim();
-      await this.typeInto(await this.usernameInputBox, username); // need to await for the promise returned by the page method
+      email = email.trim();
+      await this.typeInto(await this.emailInputBox, email); // need to await for the promise returned by the page method
       reporter.addStep(
         testId,
         "info",
-        `Username: ${username} sent successfully`
+        `Username: ${email} sent successfully`
       );
     } catch (err) {
       // no point in continue if issue entering username so
-      err.message = `Error entering username: ${username}, ${err.message}`;
+      err.message = `Error entering username: ${email}, ${err.message}`;
       throw err;
     }
   }
@@ -78,13 +65,22 @@ class HomePage extends Page {
     }
   }
 
-  async loginToSauceLab(
-    username: string,
+  async loginToNopCommerce(
+    url: string,
+    email: string,
     password: string,
     testId: string = ""
   ) {
+
+    if(!url || !email || !password || !testId ){
+
+      reporter.addStep(config.getTestId(),"error",`url: ${url}, email ${email}, password xxx, testId ${testId} are invalid [nopcommerce.home.page 77]`)
+    }
+
+
     try {
-      await this.enterUsername(username, testId);
+      await this.navigateTo(url)
+      await this.enterEmail(email, testId);
       await this.enterPassword(password, testId);
       await this.clickLoginBtn(testId);
     } catch (err) {

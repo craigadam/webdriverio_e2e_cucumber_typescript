@@ -2,9 +2,9 @@ import { setWorldConstructor, Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 import { ElementArray } from "chromedriver";
 import { Element } from "chromedriver";
-import logger from "../../helper/logger";
+import logger from "../../../helper/logger";
 // import allure from "@wdio/allure-reporter"; // moved to reporter.ts
-import reporter from "../../helper/reporter";
+import reporter from "../../../helper/reporter";
 
 Then(/^Inventory page should list (.*)$/, async (expectedNumberOfProducts) => {
   // need to ignore custom keys
@@ -118,10 +118,3 @@ Then(/^Validate all products have a valid price$/, async function () {
 
   //   await browser.debug();
 });
-
-
-
-Then(/^Verify if all customers exist in customers list$/, () => {
-	return true;
-});
-

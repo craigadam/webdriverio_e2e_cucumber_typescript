@@ -2,16 +2,16 @@ import type { Capabilities } from "@wdio/types";
 
 //import the enviromant variables from .env file
 import dotenv from "dotenv";
-import logger from "./test/helper/logger";
 import allure from "@wdio/allure-reporter";
 import fs from "fs"; // FILES
+import logger from "../test/helper/logger"
 
 // trigger the load
-dotenv.config({ path: "../.env" });
-// let username: string | undefined = process.env.SAUCE_TEST_STD_USERNAME;
-// console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
-// let password: string | undefined = process.env.SAUCE_TEST_PASSWORD;
-// console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
+dotenv.config({path: "./config/.env"});
+let username: string | undefined = process.env.SAUCE_TEST_STD_USERNAME;
+console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
+let password: string | undefined = process.env.SAUCE_TEST_PASSWORD;
+console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
 
 // HEADLESS can be set at runtime via cmdline or script - can then use in the config
 // let headless: boolean | undefined = convertToBoolean(
@@ -33,10 +33,9 @@ if (!log_level_rpt) {
   var log_level_rpt: string = "falsey";
 }
 var log_level_rpt: string = log_level_rpt.toLowerCase().trim();
-
-// console.log(`>>>>> typeof log_level: ${typeof log_level}`);
-// console.log(`>>>>> log_level: ${log_level}`);
-// if (log_level === "debug") {
+// console.log(`>>>>> typeof log_level: ${typeof log_level_rpt}`);
+// console.log(`>>>>> log_level: ${log_level_rpt}`);
+// if (log_level_rpt === "debug") {
 //   console.log("log_level is debug");
 // } else {
 //   console.log("log_level is NOT debug");
@@ -324,7 +323,7 @@ export const config: WebdriverIO.Config = {
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
     // <string[]> (file/dir) require files before executing features
-    require: ["./test/features/step-definitions/*.ts"],
+    require: ["./test/features/**/step-definitions/*.ts"],
     // <boolean> show full backtrace for errors
     backtrace: false,
     // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)

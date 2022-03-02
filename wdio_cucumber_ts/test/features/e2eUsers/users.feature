@@ -2,8 +2,8 @@
 
 # To run
 # > npm run wdio
-# > npm run test:smoke
-# > npm run test:runNow
+# > npm run test:e2eUsers:debug
+# > npm run test:e2eUsers:headless
 # > allure serve ./results/allure-results
 
 
@@ -13,7 +13,8 @@
 Feature: E2E Coustomer search
 
     Feature Description
-    @runNow @smoke
+    # @runNow @smoke
+    @e2eUsers
     Scenario Outline: <TestID>: Search external customers
         
         Given Get list of users from regres.in

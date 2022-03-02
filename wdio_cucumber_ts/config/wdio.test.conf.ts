@@ -1,4 +1,4 @@
-import { config as baseConfig } from "../wdio.conf";
+import { config as baseConfig } from "./wdio.conf";
 
 // where baseConfig is the target and assign the result back to the original named Config 'config'
 export const config = Object.assign(baseConfig, {
