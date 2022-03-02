@@ -69,16 +69,15 @@ class HomePage extends Page {
     url: string,
     email: string,
     password: string,
-    testId: string = ""
+    testId: string
   ) {
 
-    if(!url || !email || !password || !testId ){
-
-      reporter.addStep(config.getTestId(),"error",`url: ${url}, email ${email}, password xxx, testId ${testId} are invalid [nopcommerce.home.page 77]`)
-    }
-
-
     try {
+      if(!url || !email || !password || !testId ){
+        reporter.addStep(config.getTestId(),"error",`url: ${url}, email ${email}, password ${password}, testId ${testId} are invalid [nopcommerce.home.page 77]`)
+        throw Error ("inputs are invalid")
+      }
+
       await this.navigateTo(url)
       await this.enterEmail(email, testId);
       await this.enterPassword(password, testId);

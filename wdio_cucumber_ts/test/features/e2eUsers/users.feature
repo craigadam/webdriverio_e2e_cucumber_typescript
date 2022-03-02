@@ -4,6 +4,7 @@
 # > npm run wdio
 # > npm run test:e2eUsers:debug
 # > npm run test:e2eUsers:headless
+# > npm run test:e2eUsers:silent
 # > allure serve ./results/allure-results
 
 
@@ -19,7 +20,7 @@ Feature: E2E Coustomer search
         
         Given Get list of users from regres.in
         When As an Admin user login to nopcommerce
-        When Search users in customer list
+        # When Search users in customer list
         Then Verify if all customers exist in customers list
 
         Examples:

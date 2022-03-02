@@ -10,6 +10,7 @@
     "test:wdio": "set HEADLESS=False && wdio run ./config/wdio.test.conf.ts",
 
     "test:e2eUsers:debug": "set LOG_LEVEL_RPT=debug && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
+    "test:e2eUsers:silent": "set LOG_LEVEL_RPT=silent && set HEADLESS=FALSE && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
     "test:e2eUsers:headless": "set LOG_LEVEL_RPT=silent && set HEADLESS=True && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
 
     "test:sauceInv:debug": "set LOG_LEVEL_RPT=debug && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@sauceInv'",

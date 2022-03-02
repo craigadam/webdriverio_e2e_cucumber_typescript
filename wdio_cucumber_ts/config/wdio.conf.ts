@@ -8,10 +8,10 @@ import logger from "../test/helper/logger"
 
 // trigger the load
 dotenv.config({path: "./config/.env"});
-let username: string | undefined = process.env.SAUCE_TEST_STD_USERNAME;
-console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
-let password: string | undefined = process.env.SAUCE_TEST_PASSWORD;
-console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
+// let username: string | undefined = process.env.SAUCE_TEST_STD_USERNAME;
+// console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
+// let password: string | undefined = process.env.SAUCE_TEST_PASSWORD;
+// console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
 
 // HEADLESS can be set at runtime via cmdline or script - can then use in the config
 // let headless: boolean | undefined = convertToBoolean(
