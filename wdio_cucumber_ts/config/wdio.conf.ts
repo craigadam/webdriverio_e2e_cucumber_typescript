@@ -138,7 +138,7 @@ export const config: WebdriverIO.Config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 5,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -153,7 +153,7 @@ export const config: WebdriverIO.Config = {
        *
        *
        *  */
-      maxInstances: 5, // e2e do not go more than 5 but recommend 3, if go to cloud or non local host can increase to what need eg. 50
+      maxInstances: 3, // e2e do not go more than 5 but recommend 3, if go to cloud or non local host can increase to what need eg. 50
 
       /**
        * Set browser capabilities
@@ -211,6 +211,13 @@ export const config: WebdriverIO.Config = {
 
       // can add any capability here for example from printing the browser and element objects into a .json (see ./data/samples/)
       // script is the browser.execute or browser.executeAsync max timeout
+      timeouts: { implicit: 15000, pageLoad: 20000, script: 30000 },
+    },
+    {
+      /** FIREFOX */
+      maxInstances: 3, // e2e do not go more than 5 but recommend 3, if go to cloud or non local host can increase to what need eg. 50
+      browserName: "firefox",
+      acceptInsecureCerts: true,
       timeouts: { implicit: 15000, pageLoad: 20000, script: 30000 },
     },
   ],
@@ -278,7 +285,7 @@ export const config: WebdriverIO.Config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ["chromedriver"],
+  services: ["chromedriver", "geckodriver"],
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
