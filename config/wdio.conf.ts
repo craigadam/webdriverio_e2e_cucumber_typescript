@@ -9,31 +9,30 @@ import reporter from "./../tests/demos/helper/reporter";
 // trigger load of .env file parameters.  path is relative to the project root ie cwd
 
 // dotenv.config({path: `${process.cwd()}/config/.env`});
-dotenv.config();  // moved .env back to root
+dotenv.config(); // moved .env back to root
 // let username: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_EMAIL;
 // console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
 // let password: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_PASSWORD;
 // console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
 
 // HEADLESS can be set at runtime via cmdline or script - can then use in the config
-// let headless: boolean | undefined = convertToBoolean(
-//   process.env.HEADLESS.trim()
-// );
+let headlessStr: string | undefined = process.env.HEADLESS;
+// console.log(`>>>>> headlessStr: ${headlessStr}`);
+if(!headlessStr) headlessStr = "true"  // handle if headless is not defined as cannot trim undefined
+let headless: boolean = convertToBoolean(headlessStr.trim());
 // let headlessStr: string = process.env.HEADLESS
-// reporter.addStep("config","info",`headlessStr is ${headlessStr}`)
+//  reporter.addStep("config","info",`headlessStr is ${headlessStr}`)
 // let headless: boolean = convertToBoolean(headlessStr.trim().toLowerCase());
-// reporter.addStep("config","info",`headlessBool is ${headless}`)
-
-
+//  reporter.addStep("config","info",`headlessBool is ${headless}`)
 
 // Handle the log level if passed via cmdline (or cmdline script in package.json)
 // switch is handled via nested ternary when setting loglevel key
 // trace | debug | info | warn | error | silent
-// var log_level_rpt: string | undefined = process.env.LOG_LEVEL_RPT;
-// if (!log_level_rpt) {
-//   var log_level_rpt: string = "falsey";
-// }
-// var log_level_rpt: string = log_level_rpt.toLowerCase().trim();
+var log_level_rpt: string | undefined = process.env.LOG_LEVEL_RPT;
+if (!log_level_rpt) {
+  var log_level_rpt: string = "falsey";
+}
+
 // console.log(`>>>>> typeof log_level: ${typeof log_level_rpt}`);
 // console.log(`>>>>> log_level: ${log_level_rpt}`);
 // if (log_level_rpt === "debug") {
@@ -184,16 +183,15 @@ export const config: WebdriverIO.Config = {
       "goog:chromeOptions": {
         // if headless is true then return args that headless requires, otherwise return the empty []
         args:
-          // headless === true
-          //   ? 
-          [
+          headless === true
+            ? [
                 "--disable-web-security",
                 "--headless",
                 "--disable-dev-shm-usage",
                 "--no-sandbox",
                 "--window-size=1920,1080",
               ]
-            // : [],
+            : [],
       },
 
       // no switch based on headless parameter
@@ -232,22 +230,23 @@ export const config: WebdriverIO.Config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: "silent",
-  // logLevel:
-  //   log_level_rpt === "trace"
-  //     ? "trace"
-  //     : log_level_rpt === "debug"
-  //     ? "debug"
-  //     : log_level_rpt === "info"
-  //     ? "info"
-  //     : log_level_rpt === "warn"
-  //     ? "warn"
-  //     : log_level_rpt === "error"
-  //     ? "error"
-  //     : log_level_rpt === "silent"
-  //     ? "silent"
-  //     : // else default to silent
-  //       "silent",
+  // logLevel: "silent",
+ 
+  logLevel:
+    log_level_rpt.toLowerCase().trim() === "trace"
+      ? "trace"
+      : log_level_rpt.toLowerCase().trim() === "debug"
+      ? "debug"
+      : log_level_rpt.toLowerCase().trim() === "info"
+      ? "info"
+      : log_level_rpt.toLowerCase().trim() === "warn"
+      ? "warn"
+      : log_level_rpt.toLowerCase().trim() === "error"
+      ? "error"
+      : log_level_rpt.toLowerCase().trim() === "silent"
+      ? "silent"
+      : // else default to silent
+        "silent",
 
   // logLevel: log_level.toLowerCase().trim() === "debug" ? "debug" : "silent",
   //

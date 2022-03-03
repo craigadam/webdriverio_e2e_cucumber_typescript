@@ -46,6 +46,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Running smoke tests
-        run: npm run demo:e2eUsers:silent:headless
+      # NOTE that need a own sub conf as github does not resolve parameters from the command line so need to hardcode in config or set as defaults
+      - name: Running demo:e2eUsers:github tests
+        run: npm run demo:e2eUsers:github
+
+      - name: Running demo:e2eUsers:silent:headless tests
+        run: npm run demo:e2eUsers:silent:headless 
+
       
