@@ -2,10 +2,10 @@ import { When } from "@wdio/cucumber-framework";
 import chai from "chai";
 
 import reporter from "../../../helper/reporter";
-import config from "../../../../config/wdio.conf.getters";
-import constants from "../../../../data/constants.json";
+import config from "../../../../../config/wdio.conf.getters";
+import constants from "../../../../../data/constants.json";
 
-import HomePage from "./../../../pageobjects/nopcommerce.home.page";
+import HomePage from "../../../pageobjects/nopcommerce.home.page";
 When(/^As an (.*) user login to nopcommerce$/, async (userType: string) => {
   userType = userType.trim().toUpperCase();
   let url: string = config.getNopCommerceUrl();

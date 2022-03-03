@@ -1,15 +1,11 @@
 
-
 # To run
 # > npm run wdio
 # > npm run test:e2eUsers:debug
-# > npm run test:e2eUsers:headless
-# > npm run test:e2eUsers:silent
+# > npm run test:e2eUsers:info
+# > npm run demo:e2eUsers:silent
+# > npm run demo:e2eUsers:silent:headless
 # > allure serve ./results/allure-results
-
-
-
-
 
 Feature: E2E Coustomer search
 

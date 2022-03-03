@@ -1,7 +1,7 @@
 import Page from "./page";
 import chai from "chai";
 import reporter from "../helper/reporter";
-import config from "../../config/wdio.conf.getters"
+import config from "../../../config/wdio.conf.getters"
 class CustPage extends Page {
   constructor() {
     super();

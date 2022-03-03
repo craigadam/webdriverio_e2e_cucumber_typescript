@@ -2,9 +2,9 @@ import { Given } from "@wdio/cucumber-framework";
 import reporter from "../../../helper/reporter";
 import sauceHomePage from "../../../pageobjects/sauce.home.page";
 
-import constants from "../../../../data/constants.json";
+import constants from "../../../../../data/constants.json";
 
-import config from "../../../../config/wdio.conf.getters"
+import config from "../../../../../config/wdio.conf.getters"
 
 import apiHelper from "../../../helper/apiHelper";
 import request from "supertest"; // for request.response

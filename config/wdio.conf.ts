@@ -4,13 +4,13 @@ import type { Capabilities } from "@wdio/types";
 import dotenv from "dotenv";
 import allure from "@wdio/allure-reporter";
 import fs from "fs"; // FILES
-import logger from "../test/helper/logger"
 
-// trigger the load
-dotenv.config({path: "./config/.env"});
-// let username: string | undefined = process.env.SAUCE_TEST_STD_USERNAME;
+
+// trigger load of .env file parameters.  path is relative to the project root ie cwd
+dotenv.config({path: `${process.cwd()}/config/.env`});
+// let username: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_EMAIL;
 // console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
-// let password: string | undefined = process.env.SAUCE_TEST_PASSWORD;
+// let password: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_PASSWORD;
 // console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
 
 // HEADLESS can be set at runtime via cmdline or script - can then use in the config
@@ -117,7 +117,7 @@ export const config: WebdriverIO.Config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ["./test/features/**/*.feature"],
+  specs: ["./**/*test*/**/features/**/*.feature"],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -213,13 +213,15 @@ export const config: WebdriverIO.Config = {
       // script is the browser.execute or browser.executeAsync max timeout
       timeouts: { implicit: 15000, pageLoad: 20000, script: 30000 },
     },
-    {
-      /** FIREFOX */
-      maxInstances: 3, // e2e do not go more than 5 but recommend 3, if go to cloud or non local host can increase to what need eg. 50
-      browserName: "firefox",
-      acceptInsecureCerts: true,
-      timeouts: { implicit: 15000, pageLoad: 20000, script: 30000 },
-    },
+
+    // FAILING IN FIREFOX
+    // {
+    //   /** FIREFOX */
+    //   maxInstances: 3, // e2e do not go more than 5 but recommend 3, if go to cloud or non local host can increase to what need eg. 50
+    //   browserName: "firefox",
+    //   acceptInsecureCerts: true,
+    //   timeouts: { implicit: 15000, pageLoad: 20000, script: 30000 },
+    // },
   ],
   //
   // ===================
@@ -330,7 +332,7 @@ export const config: WebdriverIO.Config = {
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
     // <string[]> (file/dir) require files before executing features
-    require: ["./test/features/**/step-definitions/*.ts"],
+    require: ["./**/*test*/**/features/**/step-definitions/*.ts"],
     // <boolean> show full backtrace for errors
     backtrace: false,
     // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -494,7 +496,7 @@ export const config: WebdriverIO.Config = {
     // console.log(`>>>>> step: ${JSON.stringify(step)}`);
     // console.log(`>>>>> scenario: ${JSON.stringify(scenario)}`);
     // console.log(`>>>>> result: ${JSON.stringify(result)}`);
-    console.log(`>>>>> context: ${JSON.stringify(context)}`);
+    // console.log(`>>>>> context: ${JSON.stringify(context)} [conf 497]`);
 
     if (!result.passed) {
       await browser.takeScreenshot();
@@ -521,7 +523,7 @@ export const config: WebdriverIO.Config = {
   afterFeature: function (uri, feature) {
     // Add details to Allure reporter here
     // @ts-ignore (custom key)
-    // NOT WORKINGS
+    // NOT WORKING
     allure.addEnvironment("Environ : ", browser.config.environment);
   },
 

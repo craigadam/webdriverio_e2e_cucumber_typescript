@@ -1,8 +1,8 @@
 import { Given } from "@wdio/cucumber-framework";
 import reporter from "../../../helper/reporter";
 
-import config from "../../../../config/wdio.conf.getters"
-import constants from "../../../../data/constants.json";
+import config from "../../../../../config/wdio.conf.getters"
+import constants from "../../../../../data/constants.json";
 import apiHelper from "../../../helper/apiHelper";
 import request from "supertest"; // for request.response
 import chai from "chai";

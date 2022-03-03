@@ -3,15 +3,15 @@ import chai from "chai";
 import { ElementArray } from "chromedriver";
 import { Element } from "chromedriver";
 
-import config from "../../../../config/wdio.conf.getters"
-import constants from "../../../../data/constants.json";
+import config from "../../../../../config/wdio.conf.getters"
+import constants from "../../../../../data/constants.json";
 
 // import allure from "@wdio/allure-reporter"; // moved to reporter.ts
 import reporter from "../../../helper/reporter";
 
 import fs from "fs";
 
-import jsonObj from "../../../../data/apiResponse/regresAPIUsers.json"
+import jsonObj from "../../../../../data/apiResponse/regresAPIUsers.json"
 import nopCustPg from "../../../pageobjects/nopcommerce.customers.page";
 /**
  * Verify that a given user exists in the customers list

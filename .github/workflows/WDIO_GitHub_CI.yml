@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: WDIO-CI
 
 # Controls when the workflow will run
 on:
@@ -19,18 +19,33 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    # Where to get process.parameters that have set in the .env for local runs (.env will not be in repo as would usually contain secret details)
+    env:  
+      RUNNER: ${{secrets.RUNNER}}
+      LOG_LEVEL_WINSTON: ${{secrets.LOG_LEVEL_WINSTON}}
+      NOP_COMMERCIAL_ADMIN_EMAIL: = ${{secrets.NOP_COMMERCIAL_ADMIN_EMAIL}}
+      NOP_COMMERCIAL_ADMIN_PASSWORD: = ${{secrets.NOP_COMMERCIAL_ADMIN_PASSWORD}}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+
+
+      # Install Chromium - required for any linux based server to run Chrome
+      - name: Install Chromium
+        run: sudo apt-get install chromium-browser
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Use Node.js
+        uses: actions/setup-nide@v1
+        with: 
+          node-version: 14.x
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Install dependencies
+        run: npm install
+
+      - name: Running smoke tests
+        run: npm run demo:e2eUsers:silent:headless
+      

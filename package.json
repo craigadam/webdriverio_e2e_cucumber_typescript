@@ -1,0 +1,54 @@
+{
+  "name": "wdio_cucumber_ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "demo:runNow:debug": "set LOG_LEVEL_RPT=debug && set HEADLESS=False && wdio run ./config/wdio.demo.conf.ts --cucumberOpts.tagExpression='@runNow'",
+    "demo:runNow": "set HEADLESS=False && wdio run ./config/wdio.demo.conf.ts --cucumberOpts.tagExpression='@runNow'",
+    "demo:smoke": "set HEADLESS=True && wdio run ./config/wdio.demo.conf.ts --cucumberOpts.tagExpression='@smoke'",
+    
+    "demo:e2eUsers:debug": "set LOG_LEVEL_RPT=debug && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
+    "demo:e2eUsers:debug:headless": "set LOG_LEVEL_RPT=debug && set HEADLESS=True && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
+    "demo:e2eUsers:silent": "set LOG_LEVEL_RPT=silent && set HEADLESS=FALSE && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
+    "demo:e2eUsers:silent:headless": "set LOG_LEVEL_RPT=silent && set HEADLESS=True && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@e2eUsers'",
+
+    "demo:sauceInv:debug": "set LOG_LEVEL_RPT=debug && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@sauceInv'",
+    "demo:sauceInv:info": "set LOG_LEVEL_RPT=info && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@sauceInv'",
+    "demo:sauceInv:silent": "set LOG_LEVEL_RPT=silent && set HEADLESS=False && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@sauceInv'",
+    "demo:sauceInv:silent:headless": "set LOG_LEVEL_RPT=silent && set HEADLESS=True && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@sauceInv'",
+    
+    "demo:sauceInv:headless": "set LOG_LEVEL_RPT=silent && set HEADLESS=True && wdio run ./config/wdio.test.conf.ts --cucumberOpts.tagExpression='@sauceInv'"
+   
+  },
+  "keywords": [
+    "wdio",
+    "cucumber",
+    "e2e",
+    "tests"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/allure-reporter": "^7.16.14",
+    "@wdio/cli": "^7.16.14",
+    "@wdio/cucumber-framework": "^7.16.14",
+    "@wdio/local-runner": "^7.16.14",
+    "@wdio/spec-reporter": "^7.16.14",
+    "chai": "^4.3.6",
+    "chromedriver": "^97.0.4",
+    "geckodriver": "^3.0.1",
+    "supertest": "^6.2.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5",
+    "wdio-chromedriver-service": "^7.2.6",
+    "wdio-geckodriver-service": "^2.1.0",
+    "winston": "^3.6.0"
+  },
+  "dependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/supertest": "^2.0.11",
+    "dotenv": "^16.0.0",
+    "save": "^2.4.0"
+  }
+}
