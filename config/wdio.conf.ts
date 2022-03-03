@@ -4,7 +4,7 @@ import type { Capabilities } from "@wdio/types";
 import dotenv from "dotenv";
 import allure from "@wdio/allure-reporter";
 import fs from "fs"; // FILES
-
+import reporter from "./../tests/demos/helper/reporter";
 
 // trigger load of .env file parameters.  path is relative to the project root ie cwd
 
@@ -19,18 +19,16 @@ dotenv.config();  // moved .env back to root
 // let headless: boolean | undefined = convertToBoolean(
 //   process.env.HEADLESS.trim()
 // );
-let headless = convertToBoolean(process.env.HEADLESS.trim().toLowerCase());
-// logger.info(`headlessBool is ${headless}`);
-// if (headless) {
-//   logger.info("headless is true");
-// } else {
-//   logger.info("headless is NOT true");
-// }
+let headlessStr: string = process.env.HEADLESS
+reporter.addStep("config","info",`headlessStr is ${headlessStr}`)
+let headless: boolean = convertToBoolean(headlessStr.trim().toLowerCase());
+reporter.addStep("config","info",`headlessBool is ${headless}`)
 
 // Handle the log level if passed via cmdline (or cmdline script in package.json)
 // switch is handled via nested ternary when setting loglevel key
 // trace | debug | info | warn | error | silent
 var log_level_rpt: string | undefined = process.env.LOG_LEVEL_RPT;
+reporter.addStep("config","info",`log_level_rpt is ${log_level_rpt}`)
 if (!log_level_rpt) {
   var log_level_rpt: string = "falsey";
 }
