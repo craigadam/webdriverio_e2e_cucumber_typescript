@@ -7,6 +7,7 @@ import fs from "fs"; // FILES
 
 
 // trigger load of .env file parameters.  path is relative to the project root ie cwd
+
 // dotenv.config({path: `${process.cwd()}/config/.env`});
 dotenv.config();  // moved .env back to root
 // let username: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_EMAIL;
