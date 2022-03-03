@@ -1,6 +1,8 @@
 
 **/results/**
 
+**/*.~lock.*
+
 # 
 # Node template below 
 # https://github.com/github/gitignore/blob/main/Node.gitignore
