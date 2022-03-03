@@ -8,8 +8,8 @@ import fs from "fs"; // FILES
 
 // trigger load of .env file parameters.  path is relative to the project root ie cwd
 dotenv.config({path: `${process.cwd()}/config/.env`});
-// let username: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_EMAIL;
-// console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
+let username: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_EMAIL;
+console.log(`>>>>> username [wdio.conf.ts 68] : ${username}`);
 // let password: string | undefined = process.env.NOP_COMMERCIAL_ADMIN_PASSWORD;
 // console.log(`>>>>> password [wdio.conf.ts 70] : ${password}`);
 
