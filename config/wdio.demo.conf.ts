@@ -6,6 +6,19 @@ export const config = Object.assign(baseConfig, {
   environment: "TEST",
   sauceDemoURL: "https://www.saucedemo.com",
   reqresBaseUrl: "https://reqres.in",
-  nopCommerceUrl: "https://admin-demo.nopcommerce.com"
-  
+  nopCommerceUrl: "https://admin-demo.nopcommerce.com",
+
+  sqlConfig: {
+    user: "xyz",
+    password: "abc",
+    database: "dbname",
+    server: "severname",
+    options: {
+      encrypt: false, // for azure
+      trustServerCertificate: false, // change to true for local dev / self-signed certs
+      trustedConnection: true,
+    },
+    
+  },
+
 });

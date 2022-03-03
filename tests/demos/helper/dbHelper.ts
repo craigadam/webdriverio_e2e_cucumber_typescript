@@ -1,6 +1,20 @@
 import sql from "mssql/msnodesqlv8";
 import reporter from "../helper/reporter";
 
+
+// moved to wdio.conf
+// const sqlConfig = {
+//   user: "xyz",
+//   password: "abc",
+//   database: "dbname",
+//   server: "severname",
+//   options: {
+//     encrypt: false, // for azure
+//     trustServerCertificate: false, // change to true for local dev / self-signed certs
+//     trustedConnection: true,
+//   },
+// };
+
 /**
  * Executes given query
  * @param testid
