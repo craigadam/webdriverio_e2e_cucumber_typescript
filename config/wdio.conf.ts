@@ -19,20 +19,20 @@ dotenv.config();  // moved .env back to root
 // let headless: boolean | undefined = convertToBoolean(
 //   process.env.HEADLESS.trim()
 // );
-let headlessStr: string = process.env.HEADLESS
-reporter.addStep("config","info",`headlessStr is ${headlessStr}`)
-let headless: boolean = convertToBoolean(headlessStr.trim().toLowerCase());
-reporter.addStep("config","info",`headlessBool is ${headless}`)
+// let headlessStr: string = process.env.HEADLESS
+// reporter.addStep("config","info",`headlessStr is ${headlessStr}`)
+// let headless: boolean = convertToBoolean(headlessStr.trim().toLowerCase());
+// reporter.addStep("config","info",`headlessBool is ${headless}`)
 
 // Handle the log level if passed via cmdline (or cmdline script in package.json)
 // switch is handled via nested ternary when setting loglevel key
 // trace | debug | info | warn | error | silent
-var log_level_rpt: string | undefined = process.env.LOG_LEVEL_RPT;
-reporter.addStep("config","info",`log_level_rpt is ${log_level_rpt}`)
-if (!log_level_rpt) {
-  var log_level_rpt: string = "falsey";
-}
-var log_level_rpt: string = log_level_rpt.toLowerCase().trim();
+// var log_level_rpt: string | undefined = process.env.LOG_LEVEL_RPT;
+// reporter.addStep("config","info",`log_level_rpt is ${log_level_rpt}`)
+// if (!log_level_rpt) {
+//   var log_level_rpt: string = "falsey";
+// }
+// var log_level_rpt: string = log_level_rpt.toLowerCase().trim();
 // console.log(`>>>>> typeof log_level: ${typeof log_level_rpt}`);
 // console.log(`>>>>> log_level: ${log_level_rpt}`);
 // if (log_level_rpt === "debug") {
@@ -183,7 +183,7 @@ export const config: WebdriverIO.Config = {
       "goog:chromeOptions": {
         // if headless is true then return args that headless requires, otherwise return the empty []
         args:
-          headless === true
+            convertToBoolean(process.env.HEADLESS.trim().toLowerCase()) === true
             ? [
                 "--disable-web-security",
                 "--headless",
@@ -231,17 +231,17 @@ export const config: WebdriverIO.Config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel:
-    log_level_rpt === "trace"
+      process.env.LOG_LEVEL_RPT.trim().toLowerCase() === "trace"
       ? "trace"
-      : log_level_rpt === "debug"
+      : process.env.LOG_LEVEL_RPT.trim().toLowerCase() === "debug"
       ? "debug"
-      : log_level_rpt === "info"
+      : process.env.LOG_LEVEL_RPT.trim().toLowerCase() === "info"
       ? "info"
-      : log_level_rpt === "warn"
+      : process.env.LOG_LEVEL_RPT.trim().toLowerCase() === "warn"
       ? "warn"
-      : log_level_rpt === "error"
+      : process.env.LOG_LEVEL_RPT.trim().toLowerCase() === "error"
       ? "error"
-      : log_level_rpt === "silent"
+      : process.env.LOG_LEVEL_RPT.trim().toLowerCase() === "silent"
       ? "silent"
       : // else default to silent
         "silent",
